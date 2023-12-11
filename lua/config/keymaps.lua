@@ -53,7 +53,7 @@ function get_spring_boot_runner(profile, debug)
   local debug_param = ""
   if debug then
     debug_param =
-      ' -Dspring.cloud.kubernetes.enabled=false -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" '
+      ' -Dspring.application.json=\'{"spring.cloud.kubernetes.enabled": false}\' -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005" '
   end
 
   local profile_param = ""
@@ -118,20 +118,20 @@ function dap_centered_float()
   widgets.centered_float(widgets.scopes)
 end
 
-mapkey("<leader>bb", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "n")
-mapkey("<leader>bc", "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", "n")
-mapkey("<leader>bl", "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>", "n")
-mapkey("<leader>br", "<cmd>lua require'dap'.clear_breakpoints()<cr>", "n")
+mapkey("<leader>b", ":lua require'dap'.toggle_breakpoint()<cr>", "n")
+mapkey("<leader>B", ":lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<cr>", "n")
+mapkey("<leader>bl", ":lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<cr>", "n")
+mapkey("<leader>br", ":lua require'dap'.clear_breakpoints()<cr>", "n")
 mapkey("<leader>ba", "<cmd>Telescope dap list_breakpoints<cr>", "n")
 
-mapkey("<leader>dc", "<cmd>lua require'dap'.continue()<cr>", "n")
-mapkey("<leader>dj", "<cmd>lua require'dap'.step_over()<cr>", "n")
-mapkey("<leader>dk", "<cmd>lua require'dap'.step_into()<cr>", "n")
-mapkey("<leader>do", "<cmd>lua require'dap'.step_out()<cr>", "n")
-mapkey("<leader>dd", "<cmd>lua require'dap'.disconnect()<cr>", "n")
-mapkey("<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", "n")
-mapkey("<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", "n")
-mapkey("<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", "n")
+mapkey("<leader>dc", ":lua require'dap'.continue()<cr>", "n")
+mapkey("<leader>dj", ":lua require'dap'.step_over()<cr>", "n")
+mapkey("<leader>dk", ":lua require'dap'.step_into()<cr>", "n")
+mapkey("<leader>do", ":lua require'dap'.step_out()<cr>", "n")
+mapkey("<leader>dd", ":lua require'dap'.disconnect()<cr>", "n")
+mapkey("<leader>dt", ":lua require'dap'.terminate()<cr>", "n")
+mapkey("<leader>dr", ":lua require'dap'.repl.toggle()<cr>", "n")
+mapkey("<leader>dl", ":lua require'dap'.run_last()<cr>", "n")
 mapkey("<leader>di", ":lua dap_hover()<CR>", "n")
 mapkey("<leader>d?", ":lua dap_centered_float()<CR>", "n")
 mapkey("<leader>df", "<cmd>Telescope dap frames<cr>", "n")
@@ -147,3 +147,23 @@ function show_log_angularls()
 end
 
 mapkey("<leader>al", ":lua show_log_angularls()<CR>", "n")
+
+
+
+-- format
+function FormatFunction()
+  vim.lsp.buf.format({
+    async = true,
+    range = {
+      ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+      ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+    }
+  })
+end
+
+
+api.nvim_set_keymap("n", "<leader>qf", ":lua FormatFunction()<CR>", {noremap = true})
+
+
+-- harpoon
+

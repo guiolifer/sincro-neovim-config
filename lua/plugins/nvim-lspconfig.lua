@@ -10,7 +10,7 @@ local config = function()
     local hl = "DiagnosticSign" .. type
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
   end
-
+  -- local path_to_mason_packages = home .. "/.local/share/nvim/mason/packages"
   local capabilities = cmp_nvim_lsp.default_capabilities()
   -- angular
   local tsProbeLocation = vim.fn.expand "~/.asdf/installs/nodejs/18.17.0/lib/node_modules/typescript/lib"
@@ -28,6 +28,12 @@ local config = function()
     "verbose",
   }
 
+  -- java language server
+  lspconfig.java_language_server.setup {
+    -- cmd = path_to_mason_packages .. "",
+    filetypes = {"java"}
+  }
+  -- angularls
   lspconfig.angularls.setup {
     cmd = cmd,
     root_dir = lspconfig.util.root_pattern "angular.json",
@@ -222,6 +228,6 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-vsnip",
-    "hrsh7th/vim-vsnip",
+    "hrsh7th/vim-vsnip"
   },
 }
