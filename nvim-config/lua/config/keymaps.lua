@@ -164,6 +164,3 @@ end
 
 api.nvim_set_keymap("n", "<leader>qf", ":lua FormatFunction()<CR>", {noremap = true})
 
-
--- harpoon
-

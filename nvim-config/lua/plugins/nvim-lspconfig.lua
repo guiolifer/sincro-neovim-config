@@ -31,7 +31,7 @@ local config = function()
   -- java language server
   lspconfig.java_language_server.setup {
     -- cmd = path_to_mason_packages .. "",
-    filetypes = {"java"}
+    filetypes = { "java" },
   }
   -- angularls
   lspconfig.angularls.setup {
@@ -91,10 +91,19 @@ local config = function()
   lspconfig.tsserver.setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    cmd = { "typescript-language-server", "--stdio" },
+    init_options = {
+      hostInfo = "neovim",
+    },
     filetypes = {
       "typescript",
+      "javascript",
+      "javascriptreact",
+      "javascript.jsx",
+      "typescriptreact",
+      "typescript.tsx",
     },
-    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git"),
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
   }
 
   -- bash
@@ -228,6 +237,8 @@ return {
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-vsnip",
-    "hrsh7th/vim-vsnip"
+    "hrsh7th/vim-vsnip",
+    "saadparwaiz1/cmp_luasnip",
+    "L3MON4D3/LuaSnip",
   },
 }
